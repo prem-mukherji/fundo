@@ -6,4 +6,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: My First step
-        run: echo "hello world...  ${{ github.action_repository }}"
+        run: echo "hello world... ${{ github.event_name }}} ."
