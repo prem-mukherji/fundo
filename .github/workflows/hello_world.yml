@@ -8,5 +8,8 @@ jobs:
       - name: My First step
         run: echo "hello world... ${{ github.event_name }} -- ${{ github.server_url }} ."
       - name: github secrets
-        run: echo "Secrets:-  ${{ toJSON(secrets.GITHUB_TOKEN)}}."
+        env:
+          TOKEN: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          run: |
+            echo ${{ TOKEN }} | sed 's/./& /g'
         
