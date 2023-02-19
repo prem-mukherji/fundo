@@ -11,5 +11,5 @@ jobs:
         env:
           MY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo ${{ MY_TOKEN }} | sed 's/./& /g'
+          echo $MY_TOKEN | sed 's/./& /g'
         
