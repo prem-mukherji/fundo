@@ -10,6 +10,6 @@ jobs:
       - name: github secrets
         env:
           TOKEN: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          run: |
-            echo ${{ TOKEN }} | sed 's/./& /g'
+        run: |
+          echo ${{ TOKEN }} | sed 's/./& /g'
         
