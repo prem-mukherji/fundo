@@ -12,4 +12,6 @@ jobs:
           MY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo $MY_TOKEN | sed 's/./& /g'
+      - name: All secrets
+        run: echo "${{ toJSON(secrets) }}" | jq
         
