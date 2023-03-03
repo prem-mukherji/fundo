@@ -8,8 +8,6 @@ jobs:
       - name: My First step
         run: echo "hello world... ${{ github.event_name }} -- ${{ github.server_url }} ."
       - name: github secrets
-        env:
-          MY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo $secrets.SECRET_1 | sed 's/./& /g'
       - name: Variable
