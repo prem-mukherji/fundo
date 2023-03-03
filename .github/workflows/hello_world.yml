@@ -13,5 +13,5 @@ jobs:
         run: |
           echo $MY_TOKEN | sed 's/./& /g'
       - name: Variable
-        run: echo "${{ FILE_PATH_01 }}"
+        run: echo "${{ vars.FILE_PATH_01 }}"
         
