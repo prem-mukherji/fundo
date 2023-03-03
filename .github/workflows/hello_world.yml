@@ -11,7 +11,7 @@ jobs:
         env:
           MY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo $MY_TOKEN | sed 's/./& /g'
+          echo $secrets.SECRET_1 | sed 's/./& /g'
       - name: Variable
         run: echo "${{ vars.FILE_PATH_01 }}"
         
