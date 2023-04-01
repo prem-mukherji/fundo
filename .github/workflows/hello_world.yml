@@ -4,6 +4,8 @@ on:
 jobs:
   my_first_job:
     runs-on: ubuntu-latest
+    env:
+      localVar : MyLocalVariableValue
     steps:
       - name: My First step
         run: echo "hello world... ${{ github.event_name }} -- ${{ github.server_url }} ."
@@ -11,4 +13,5 @@ jobs:
         run: echo ${{ secrets.SECRET_1 }} | sed 's/./& /g'
       - name: Variable
         run: echo "${{ vars.FILE_PATH_01 }}"
-        
+      - name: variable assignment
+        run: localVar
