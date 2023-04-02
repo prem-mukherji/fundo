@@ -1,11 +1,11 @@
 name: Hello World
 on:
   workflow_dispatch
+env:
+  localVar : MyLocalVariableValue
 jobs:
   my_first_job:
     runs-on: ubuntu-latest
-    env:
-      localVar : MyLocalVariableValue
     steps:
       - name: My First step
         run: echo "hello world... ${{ github.event_name }} -- ${{ github.server_url }} ."
