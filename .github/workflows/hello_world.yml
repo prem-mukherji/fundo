@@ -13,5 +13,7 @@ jobs:
         run: echo ${{ secrets.SECRET_1 }} | sed 's/./& /g'
       - name: Variable
         run: echo "${{ vars.FILE_PATH_01 }}"
+      - name: localVarPrint
+        run: echo "${{ localVal }}"
       - name: variable assignment
-        run: localVar
+        run: echo "localVar = hisLocalVariableValue"
