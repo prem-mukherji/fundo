@@ -14,8 +14,8 @@ jobs:
       - name: Variable
         run: echo "${{ vars.FILE_PATH_01 }}"
       - name: localVarPrint
-        run: echo "${{ env.localVar }}"
+        run: echo "$localVar"
       - name: variable assignment
-        run: echo "env.localVar = hisLocalVariableValue" >> $GITHUB_ENV
+        run: echo "localVar=hisLocalVariableValue" >> $GITHUB_ENV
       - name: localVarPrint Again
-        run: echo "${{env.localVar }}"
+        run: echo "$localVar"
