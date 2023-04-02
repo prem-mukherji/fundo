@@ -18,4 +18,4 @@ jobs:
       - name: variable assignment
         run: echo " localVar = hisLocalVariableValue" >> $GITHUB_ENV
       - name: localVarPrint Again
-        run: echo "${{ env.localVar }}"
+        run: echo "${{ localVar }}"
