@@ -17,5 +17,5 @@ jobs:
         run: echo "${{ env.localVar }}"
       - name: variable assignment
         run: echo " env.localVar = hisLocalVariableValue"
-      - name: localVarPrint
+      - name: localVarPrint Again
         run: echo "${{ env.localVar }}"
