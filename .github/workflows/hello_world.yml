@@ -14,6 +14,6 @@ jobs:
       - name: Variable
         run: echo "${{ vars.FILE_PATH_01 }}"
       - name: localVarPrint
-        run: echo "${{ env.localVal }}"
+        run: echo "${{ env.localVar }}"
       - name: variable assignment
         run: echo " env.localVar = hisLocalVariableValue"
