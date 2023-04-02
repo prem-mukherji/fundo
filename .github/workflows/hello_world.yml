@@ -19,3 +19,5 @@ jobs:
         run: echo "localVar=hisLocalVariableValue" >> $GITHUB_ENV
       - name: localVarPrint Again
         run: echo "${{ env.localVar }}"
+      - name: localVarPrint and Again
+        run: echo "$env.localVar"
