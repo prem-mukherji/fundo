@@ -6,7 +6,7 @@ env:
   credentials: |
     {
       "clientId":"8543d560-815f-40e8-bc19-02f5a713e29e",
-      "clientSecret":"${{ secrets.ADMIRAL_2_NON_PROD_SPN_SECRET }}",
+      "clientSecret":"${{ secrets.SECRET_FOR_PREM_DEV_01DEV_CORESPN01 }}",
       "subscriptionId":"641cc733-cfeb-4c4c-bdc5-a126d7cc22f4",
       "tenantId":"05d75c05-fa1a-42e7-9cf1-eb416c396f2d"
     }
