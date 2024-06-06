@@ -41,7 +41,7 @@ jobs:
           creds: ${{ env.spnCredentials }}
           enable-AzPSSession: true
       - name: Azure powershell
-        uses: azure/powershell@v1
+        uses: azure/powershell@v2
         with:
           inlineScript: Get-AzSubscription
           azPSVersion: "latest"
