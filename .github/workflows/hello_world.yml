@@ -36,7 +36,7 @@ jobs:
           echo '${{ env.credentials }}' >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
       - name: Login via Az module
-        uses: azure/login@v1
+        uses: azure/login
         with:
           creds: ${{ env.spnCredentials }}
           enable-AzPSSession: true
