@@ -3,6 +3,13 @@ on:
   workflow_dispatch
 env:
   localVar : MyLocalVariableValue
+  credentials: |
+    {
+      "clientId":"8543d560-815f-40e8-bc19-02f5a713e29e",
+      "clientSecret":"${{ secrets.ADMIRAL_2_NON_PROD_SPN_SECRET }}",
+      "subscriptionId":"641cc733-cfeb-4c4c-bdc5-a126d7cc22f4",
+      "tenantId":"05d75c05-fa1a-42e7-9cf1-eb416c396f2d"
+    }
 jobs:
   my_first_job:
     runs-on: ubuntu-latest
@@ -23,3 +30,13 @@ jobs:
         run: echo $localVar
       - name: localVarPrint and Again
         run: echo "$env.localVar"
+      - name: store credential
+        run: |
+          echo "spnCredentials<<EOF" >> $GITHUB_ENV
+          echo '${{ env.credentials }}' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{ inputs.service_principle_credential }}
+          enable-AzPSSession: true
