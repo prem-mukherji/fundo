@@ -38,5 +38,5 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{ env.credentials }}
+          creds: ${{ env.spnCredentials }}
           enable-AzPSSession: true
