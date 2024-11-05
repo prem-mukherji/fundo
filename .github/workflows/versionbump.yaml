@@ -1,0 +1,89 @@
+name: Version Bump Release
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  decide:
+    name: Decide what action is required
+    runs-on: ubuntu-latest
+    outputs:
+      semantic_version: "${{ steps.bumped.outputs.semantic_version }}"
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 0
+      - name: Get latest release
+        id: get-latest-release
+        shell: pwsh
+        run: |
+          $version_regex = "^[0-9]+\.[0-9]+\.[0-9]+$"
+          $tags = (git tag | sort -V) -match $version_regex
+          echo "Existing releases:"
+          echo $tags
+          if ($tags.Count -gt 0) {
+            echo "prev_release=$tags[-1]"
+            $latest_release = $tags[-1]
+          } else {
+            echo "There is no release yet. Hence releasing for sure."
+            $latest_release = "1.0.0"
+          }
+          echo "latest_release=$latest_release"
+          echo "::set-output name=latest_release::$latest_release"
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - name: Define version to bump
+        id: define-ver-bump
+        shell: python
+        run: |
+          commits = '''${{ (join(github.event.commits.*.message, '#COMMIT#' )) }}'''
+          last_commit = commits.split('#COMMIT#')[-1]
+          commit_message = last_commit.lower()
+          print("####### COMMIT #######")
+          print(commit_message)
+          print("####### COMMIT #######")
+
+          import re
+          m = re.search('sprint ([0-9]+) release', commit_message)
+          if m is None:
+            print("Bump minor version.")
+            print("::set-output name=minor_bump::true")
+          else:
+            print("This is a sprint release.")
+            print("::set-output name=major_bump::true")
+      - name: "Bump version"
+        id: bumped
+        if: ${{ github.event_name == 'push' }}
+        shell: pwsh
+        run: |
+          $latest_release = "${{ steps.get-latest-release.outputs.latest_release }}"
+          ($major, $minor, $patch) = $latest_release.Split('.')
+          if ("${{ steps.define-ver-bump.outputs.major_bump }}" -eq 'true') {
+            $major = ([int]$major + 1)
+            $minor = 0
+            $patch = 0
+          } elseif ("${{ steps.define-ver-bump.outputs.minor_bump }}" -eq 'true') {
+            $minor = ( [int]$minor + 1)
+            $patch = 0
+          }
+          $semantic_version = "${major}.${minor}.${patch}"
+          echo "Should release: $semantic_version"
+          echo "::set-output name=semantic_version::$semantic_version"
+  release:
+    name: Release
+    needs: [decide]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - name: "Release version ${{ needs.decide.outputs.semantic_version }}"
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "${{ needs.decide.outputs.semantic_version }}"
+          release_name: "v${{ needs.decide.outputs.semantic_version }}"
+          draft: false
+          prerelease: false
