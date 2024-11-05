@@ -77,11 +77,12 @@ jobs:
       github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - name: Checkout the code for Tag
+        uses: actions/checkout@v2.4.0        
       - name: "Release version ${{ needs.decide.outputs.semantic_version }}"
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         with:
           tag_name: "${{ needs.decide.outputs.semantic_version }}"
           release_name: "v${{ needs.decide.outputs.semantic_version }}"
