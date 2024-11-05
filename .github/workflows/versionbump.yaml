@@ -84,10 +84,10 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-              console.log('Creating tag: ${{ needs.generate.outputs.semantic_version }}')
+              console.log('Creating tag: ${{ needs.decide.outputs.semantic_version }}')
               github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'tags/${{ needs.generate.outputs.semantic_version }}',
+                ref: 'refs/tags/${{ needs.decide.outputs.semantic_version }}',
                 sha: context.sha
               }) 
