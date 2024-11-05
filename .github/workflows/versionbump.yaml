@@ -78,13 +78,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code for Tag
-        uses: actions/checkout@v2.4.0        
-      - name: "Release version ${{ needs.decide.outputs.semantic_version }}"
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v2.4.0 
+      
+      - name: Create tag only
+        uses: actions/github-script@v5
         with:
-          tag_name: "${{ needs.decide.outputs.semantic_version }}"
-          release_name: "v${{ needs.decide.outputs.semantic_version }}"
-          draft: false
-          prerelease: false
+          script: |
+              console.log('Creating tag: ${{ needs.generate.outputs.semantic_version }}')
+              github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ needs.generate.outputs.semantic_version }}',
+                sha: context.sha
+              }) 
