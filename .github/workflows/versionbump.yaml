@@ -1,4 +1,4 @@
-name: Version Bump Release
+vname: Version Bump Release
 on:
   push:
   workflow_dispatch:
@@ -88,6 +88,6 @@ jobs:
               github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'refs/tags/${{ needs.decide.outputs.semantic_version }}',
+                ref: 'refs/tags/${{ needs.decide.outputs.semantic_version }}'+'-dev',
                 sha: context.sha
               }) 
